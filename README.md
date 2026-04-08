@@ -1,4 +1,4 @@
-# codercom-java-images
+# codercom-java-images-eclipse-temurin
 This repository contains java images for use with Coder. but can choose jdk version!!!
 
 All of our base images are built for Ubuntu or Debian environments. For example, you can use images like `eclipse-temurin:21-jdk-noble` or `eclipse-temurin:17-jdk-noble`.
