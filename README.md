@@ -7,6 +7,14 @@ All of our base images are built for Ubuntu or Debian environments. For example,
 The base image is using from https://hub.docker.com/_/eclipse-temurin/
 ![](https://raw.githubusercontent.com/docker-library/docs/cb27e17c8b50fddc58f1933d266a1a7686fea8ed/eclipse-temurin/logo.png)
 
+## Image List
+The Image are push through Docker hub and Github Registry, can choose any to pull
+if want latest, can pull from below
+
+* `docker pull ghcr.io/ziyi-bear/codercom-java-images-eclipse-temurin:main-25-jdk-noble`
+* `docker pull ghcr.io/ziyi-bear/codercom-java-images-eclipse-temurin:main-21-jdk-noble`
+* `docker pull ghcr.io/ziyi-bear/codercom-java-images-eclipse-temurin:main-17-jdk-noble`
+
 ## User Management
 
 We do not explicitly delete the default user (e.g., `ubuntu`) or user `1001` in these containers. This is because some base images do not contain user `1001` or a default user out of the box, which would cause user deletion commands to fail during the build process (e.g., `id: '1001': no such user`). Instead, we handle user permissions and creation dynamically to ensure compatibility across various JDK base images.
