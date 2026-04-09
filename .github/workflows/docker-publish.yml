@@ -20,6 +20,8 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  # TODO: Replace with your actual Docker Hub username/organization
+  DOCKERHUB_USERNAME: ziyibear
 
 
 jobs:
@@ -65,13 +67,24 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Login against Docker Hub except on PR
+      # https://github.com/docker/login-action
+      - name: Log into Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            docker.io/${{ env.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
           # 定義如何根據 Git 事件自動產生 Docker 標籤：
           # type=ref,event=branch : 當推送至分支時，使用分支名稱作為標籤 (例如: main)
           # type=ref,event=tag    : 當推送 Git 標籤時，使用 Git 標籤名稱作為標籤 (例如: v1.0.0)
